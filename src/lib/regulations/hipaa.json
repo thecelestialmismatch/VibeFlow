@@ -1,0 +1,128 @@
+[
+    {
+        "id": "hipaa-privacy-1",
+        "framework": "HIPAA",
+        "article": "45 CFR § 164.502",
+        "title": "General rules for uses and disclosures of PHI",
+        "summary": "A covered entity or business associate may not use or disclose Protected Health Information (PHI) except as permitted by the Privacy Rule (e.g., for treatment, payment, or healthcare operations, or with authorization).",
+        "requirements": [
+            "Implement a Notice of Privacy Practices (NPP).",
+            "Obtain written authorization for uses outside of TPO (Treatment, Payment, Operations).",
+            "Apply the 'Minimum Necessary' standard when disclosing PHI."
+        ],
+        "commonGaps": [
+            "Sharing PHI with unauthorized third-party marketing services.",
+            "Staff members accessing patient records without a valid business reason.",
+            "Missing Business Associate Agreements (BAAs) with software vendors."
+        ],
+        "severity": "critical",
+        "applicableTo": [
+            "healthcare",
+            "saas"
+        ]
+    },
+    {
+        "id": "hipaa-privacy-3",
+        "framework": "HIPAA",
+        "article": "45 CFR § 164.524",
+        "title": "Access of individuals to PHI",
+        "summary": "Individuals have the right to inspect and obtain a copy of their PHI in a designated record set, typically within 30 days.",
+        "requirements": [
+            "Provide a clear process for patients to request their medical records.",
+            "Deliver electronic records in a readable electronic format if requested."
+        ],
+        "commonGaps": [
+            "Charging excessive fees for record copies.",
+            "Failing to provide records within the 30-day deadline."
+        ],
+        "severity": "high",
+        "applicableTo": [
+            "healthcare"
+        ]
+    },
+    {
+        "id": "hipaa-security-admin",
+        "framework": "HIPAA",
+        "article": "45 CFR § 164.308",
+        "title": "Administrative Safeguards",
+        "summary": "Implement policies and procedures to prevent, detect, contain, and correct security violations.",
+        "requirements": [
+            "Conduct a comprehensive, organization-wide Risk Analysis.",
+            "Assign a Security Official responsible for the development and implementation of policies.",
+            "Implement an Information System Activity Review process."
+        ],
+        "commonGaps": [
+            "Never performing a formal risk assessment.",
+            "Lack of formal security policies and employee security awareness training."
+        ],
+        "severity": "critical",
+        "applicableTo": [
+            "healthcare",
+            "saas"
+        ]
+    },
+    {
+        "id": "hipaa-security-physical",
+        "framework": "HIPAA",
+        "article": "45 CFR § 164.310",
+        "title": "Physical Safeguards",
+        "summary": "Implement physical measures, policies, and procedures to protect electronic information systems and related buildings and equipment, from natural and environmental hazards, and unauthorized intrusion.",
+        "requirements": [
+            "Facility access controls and validation procedures.",
+            "Workstation use guidelines and physical security.",
+            "Device and media controls (disposal, media re-use)."
+        ],
+        "commonGaps": [
+            "Leaving unencrypted laptops in unlocked vehicles.",
+            "Improper disposal of hard drives containing ePHI."
+        ],
+        "severity": "medium",
+        "applicableTo": [
+            "healthcare"
+        ]
+    },
+    {
+        "id": "hipaa-security-tech",
+        "framework": "HIPAA",
+        "article": "45 CFR § 164.312",
+        "title": "Technical Safeguards",
+        "summary": "Implement technical policies and procedures for electronic information systems that maintain ePHI to allow access only to those persons or software programs that have been granted access rights.",
+        "requirements": [
+            "Unique user identification (no shared accounts).",
+            "Automatic logoff mechanisms.",
+            "Encryption and decryption mechanisms for ePHI at rest and in transit.",
+            "Audit controls to record and examine access and other activity."
+        ],
+        "commonGaps": [
+            "Nurses sharing login credentials.",
+            "Sending ePHI over unsecured email or text messages.",
+            "Lack of granular access logs indicating who accessed which record when."
+        ],
+        "severity": "critical",
+        "applicableTo": [
+            "healthcare",
+            "saas"
+        ]
+    },
+    {
+        "id": "hipaa-breach",
+        "framework": "HIPAA",
+        "article": "45 CFR § 164.400-414",
+        "title": "Breach Notification Rule",
+        "summary": "Covered entities and their business associates must provide notification following a breach of unsecured protected health information.",
+        "requirements": [
+            "Notify affected individuals without unreasonable delay, no later than 60 days.",
+            "Notify the Secretary of HHS (and prominent media if >500 residents of a state/jurisdiction are affected).",
+            "Business associates must notify covered entities of breaches."
+        ],
+        "commonGaps": [
+            "Failing to report ransomware incidents affecting ePHI availability.",
+            "Delaying notification beyond the 60-day mandated window."
+        ],
+        "severity": "critical",
+        "applicableTo": [
+            "healthcare",
+            "saas"
+        ]
+    }
+]

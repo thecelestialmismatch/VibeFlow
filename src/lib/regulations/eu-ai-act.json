@@ -1,0 +1,138 @@
+[
+    {
+        "id": "eu-aiact-prohibited",
+        "framework": "EU AI Act",
+        "article": "Title II (Article 5)",
+        "title": "Prohibited AI Practices",
+        "summary": "AI systems representing an unacceptable risk are banned.",
+        "requirements": [
+            "Do not deploy AI that uses subliminal techniques to alter behavior.",
+            "Do not use AI for social scoring by public authorities.",
+            "Do not use real-time biometric identification in public spaces for law enforcement (with rare exceptions).",
+            "Do not use biometric categorization systems based on sensitive attributes.",
+            "Do not use AI to construct facial recognition databases through untargeted scraping."
+        ],
+        "commonGaps": [
+            "Deploying emotion-recognition AI in the workplace or schools.",
+            "Using scraping APIs to build unrestricted biometric databases."
+        ],
+        "severity": "critical",
+        "applicableTo": [
+            "all",
+            "saas"
+        ]
+    },
+    {
+        "id": "eu-aiact-highrisk-criteria",
+        "framework": "EU AI Act",
+        "article": "Title III (Chapter 1, Article 6)",
+        "title": "High-Risk AI Systems Classification",
+        "summary": "AI systems used in critical sectors (e.g., education, employment, critical infrastructure, law enforcement) are classified as high-risk and face strict obligations.",
+        "requirements": [
+            "Identify if your AI tool is used as a safety component of a product, or falls into an Annex III high-risk area.",
+            "Examples include: resume screening AI, credit scoring AI, medical device AI.",
+            "If classified as high-risk, a comprehensive compliance program must be established before placing on the market."
+        ],
+        "commonGaps": [
+            "Failing to classify an algorithmic HR screening tool as high-risk.",
+            "Deploying automated credit-scoring without realizing it triggers high-risk obligations."
+        ],
+        "severity": "high",
+        "applicableTo": [
+            "saas",
+            "fintech",
+            "healthcare"
+        ]
+    },
+    {
+        "id": "eu-aiact-highrisk-obligations",
+        "framework": "EU AI Act",
+        "article": "Title III (Chapter 2)",
+        "title": "Requirements for High-Risk AI Systems",
+        "summary": "Providers of high-risk AI must meet detailed requirements relating to risk management, data governance, technical documentation, and human oversight.",
+        "requirements": [
+            "Establish and maintain a continuous Risk Management System.",
+            "Ensure training, validation, and testing datasets are relevant, representative, and error-free.",
+            "Draw up extensive Technical Documentation detailing system operations.",
+            "Implement automatic recording of events (logging) to trace system output.",
+            "Design systems to allow effective Human Oversight (e.g., stopping the system).",
+            "Ensure an appropriate level of accuracy, robustness, and cybersecurity."
+        ],
+        "commonGaps": [
+            "Training AI models on biased or uncurated datasets.",
+            "\"Black box\" systems that lack detailed technical documentation.",
+            "Failing to implement a \"kill switch\" or human override mechanism."
+        ],
+        "severity": "critical",
+        "applicableTo": [
+            "saas",
+            "fintech",
+            "healthcare"
+        ]
+    },
+    {
+        "id": "eu-aiact-compliance-ce",
+        "framework": "EU AI Act",
+        "article": "Title III (Chapter 4 & 5)",
+        "title": "Conformity Assessment and CE Marking",
+        "summary": "Before releasing a high-risk AI system, providers must undergo a conformity assessment and affix the CE marking.",
+        "requirements": [
+            "Perform a Conformity Assessment (internal control or via a notified body, depending on the system).",
+            "Draw up an EU Declaration of Conformity.",
+            "Affix the CE marking of conformity visibly, legibly, and indelibly.",
+            "Register the high-risk AI system in the EU database before deployment."
+        ],
+        "commonGaps": [
+            "Releasing software without passing through the required assessment procedure.",
+            "Failing to register the system in the new EU database."
+        ],
+        "severity": "high",
+        "applicableTo": [
+            "saas",
+            "fintech",
+            "healthcare"
+        ]
+    },
+    {
+        "id": "eu-aiact-transparency",
+        "framework": "EU AI Act",
+        "article": "Title IV (Article 52)",
+        "title": "Transparency Obligations for Certain AI Systems",
+        "summary": "Even if not high-risk, certain AI systems (like chatbots, deepfakes, emotion recognition) have specific transparency duties.",
+        "requirements": [
+            "Inform users they are interacting with an AI system (e.g., chatbot disclaimers).",
+            "Label AI-generated content or deepfakes clearly (watermarking).",
+            "Inform individuals if emotion recognition or biometric categorization is applied to them."
+        ],
+        "commonGaps": [
+            "Customer support chatbots that pretend to be human.",
+            "Publishing AI-generated marketing videos or text without disclosure."
+        ],
+        "severity": "medium",
+        "applicableTo": [
+            "saas",
+            "ecommerce",
+            "all"
+        ]
+    },
+    {
+        "id": "eu-aiact-deadline-aug2026",
+        "framework": "EU AI Act",
+        "article": "Implementation Timeline",
+        "title": "August 2026 Deadline Compliance",
+        "summary": "The main provisions of the EU AI Act generally apply 24 months after entry into force (expected around August 2026). Providers and deployers must align legacy and new systems before this date.",
+        "requirements": [
+            "Audit existing AI systems for prohibited practices (which apply 6 months after entry into force).",
+            "Audit existing systems to determine high-risk classification.",
+            "Begin establishing Risk Management Systems and drafting Technical Documentation immediately to ensure readiness for the 24-month deadline."
+        ],
+        "commonGaps": [
+            "Assuming legacy \"legacy AI systems\" are grandfathered in without review.",
+            "Delaying compliance efforts until mid-2026."
+        ],
+        "severity": "high",
+        "applicableTo": [
+            "all"
+        ]
+    }
+]

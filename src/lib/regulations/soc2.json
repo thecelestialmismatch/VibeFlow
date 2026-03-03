@@ -1,0 +1,121 @@
+[
+    {
+        "id": "soc2-security",
+        "framework": "SOC 2",
+        "article": "CC Series",
+        "title": "Security (Common Criteria)",
+        "summary": "Information and systems are protected against unauthorized access, unauthorized disclosure of information, and damage to systems that could compromise the availability, integrity, confidentiality, and privacy of information or systems.",
+        "requirements": [
+            "Implement logical and physical access controls.",
+            "Conduct regular risk assessments and vulnerability management.",
+            "Establish an incident response plan and perform regular testing.",
+            "Ensure employee onboarding includes security training and background checks."
+        ],
+        "commonGaps": [
+            "Lack of Multi-Factor Authentication (MFA) for administrative access.",
+            "No formal process for revoking access when employees leave.",
+            "Missing vendor risk management program (monitoring third-party security)."
+        ],
+        "severity": "critical",
+        "applicableTo": [
+            "saas",
+            "fintech",
+            "healthcare"
+        ]
+    },
+    {
+        "id": "soc2-availability",
+        "framework": "SOC 2",
+        "article": "A Series",
+        "title": "Availability",
+        "summary": "Information and systems are available for operation and use to meet the entity's objectives.",
+        "requirements": [
+            "Maintain historical system performance data and capacity planning.",
+            "Implement robust disaster recovery and business continuity plans.",
+            "Use redundant infrastructure to prevent single points of failure.",
+            "Monitor system health and establish alerting for downtime."
+        ],
+        "commonGaps": [
+            "Disaster recovery plans have never been tested.",
+            "Lack of real-time monitoring and alerting systems.",
+            "No documented RTO (Recovery Time Objective) or RPO (Recovery Point Objective)."
+        ],
+        "severity": "high",
+        "applicableTo": [
+            "saas",
+            "fintech",
+            "ecommerce",
+            "healthcare"
+        ]
+    },
+    {
+        "id": "soc2-processing-integrity",
+        "framework": "SOC 2",
+        "article": "PI Series",
+        "title": "Processing Integrity",
+        "summary": "System processing is complete, valid, accurate, timely, and authorized to meet the entity's objectives.",
+        "requirements": [
+            "Implement comprehensive quality assurance and testing procedures before deployment.",
+            "Maintain detailed audit logs of transaction processing.",
+            "Identify and correct processing errors in a timely manner."
+        ],
+        "commonGaps": [
+            "Developers have direct write access to production databases.",
+            "No separation of duties between development and production deployment.",
+            "Lack of input validation leading to corrupted data states."
+        ],
+        "severity": "high",
+        "applicableTo": [
+            "fintech",
+            "saas"
+        ]
+    },
+    {
+        "id": "soc2-confidentiality",
+        "framework": "SOC 2",
+        "article": "C Series",
+        "title": "Confidentiality",
+        "summary": "Information designated as confidential is protected to meet the entity's objectives.",
+        "requirements": [
+            "Identify and classify all confidential information.",
+            "Implement data loss prevention (DLP) tools and policies.",
+            "Ensure secure data disposal when retention periods end."
+        ],
+        "commonGaps": [
+            "Confidential client data stored locally on unencrypted laptops.",
+            "Sharing confidential data across unauthorized communication channels (e.g., Slack without oversight).",
+            "No formal data classification policy."
+        ],
+        "severity": "critical",
+        "applicableTo": [
+            "saas",
+            "fintech",
+            "healthcare"
+        ]
+    },
+    {
+        "id": "soc2-privacy",
+        "framework": "SOC 2",
+        "article": "P Series",
+        "title": "Privacy",
+        "summary": "Personal information is collected, used, retained, disclosed, and disposed of to meet the entity's objectives.",
+        "requirements": [
+            "Provide clear notice to individuals about privacy practices.",
+            "Obtain explicit consent for data collection when required.",
+            "Allow individuals to access, correct, or delete their personal information."
+        ],
+        "commonGaps": [
+            "Privacy policy does not accurately reflect actual data collection practices.",
+            "No established mechanism for users to request data deletion.",
+            "Sharing data with third-parties without disclosing it in the privacy notice."
+        ],
+        "severity": "high",
+        "applicableTo": [
+            "saas",
+            "ecommerce",
+            "fintech",
+            "healthcare",
+            "all"
+        ]
+    }
+]

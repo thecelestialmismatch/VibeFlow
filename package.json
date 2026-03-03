@@ -9,11 +9,24 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@ai-sdk/google": "^3.0.36",
+    "@ai-sdk/groq": "^3.0.27",
+    "@google/generative-ai": "^0.24.1",
+    "@qdrant/js-client-rest": "^1.17.0",
+    "@supabase/ssr": "^0.9.0",
+    "@supabase/supabase-js": "^2.98.0",
     "@voltagent/core": "^0.1.86",
     "@voltagent/vercel-ai": "^1.0.0",
+    "clsx": "^2.1.1",
+    "framer-motion": "^12.34.4",
+    "lucide-react": "^0.576.0",
     "next": "16.1.6",
     "react": "19.2.3",
-    "react-dom": "19.2.3"
+    "react-circular-progressbar": "^2.2.0",
+    "react-dom": "19.2.3",
+    "stripe": "^20.4.0",
+    "tailwind-merge": "^3.5.0",
+    "zod": "^3.25.76"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

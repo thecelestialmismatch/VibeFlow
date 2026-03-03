@@ -1,0 +1,188 @@
+[
+  {
+    "id": "gdpr-art-6",
+    "framework": "GDPR",
+    "article": "Article 6",
+    "title": "Lawfulness of processing",
+    "summary": "Processing of personal data is only lawful if there is a legal basis such as consent, contract performance, legal obligation, vital interests, public task, or legitimate interests.",
+    "requirements": [
+      "Must identify and document a lawful basis for each processing activity.",
+      "If relying on consent, it must be freely given, specific, informed, and unambiguous.",
+      "If relying on legitimate interests, a Legitimate Interests Assessment (LIA) is required."
+    ],
+    "commonGaps": [
+      "No documented legal basis for data processing.",
+      "Pre-ticked consent boxes used.",
+      "Bundled consent for multiple different purposes."
+    ],
+    "severity": "critical",
+    "applicableTo": ["all", "saas", "ecommerce", "healthcare", "fintech"]
+  },
+  {
+    "id": "gdpr-art-7",
+    "framework": "GDPR",
+    "article": "Article 7",
+    "title": "Conditions for consent",
+    "summary": "Controllers must be able to demonstrate that the data subject has consented to processing. Consent must be as easy to withdraw as to give.",
+    "requirements": [
+      "Maintain records of when and how consent was obtained.",
+      "Provide an easy mechanism for users to withdraw consent at any time.",
+      "Consent requests must be clearly distinguishable from other matters."
+    ],
+    "commonGaps": [
+      "Making it difficult to withdraw consent.",
+      "Using pre-checked boxes.",
+      "Failing to keep records of consent."
+    ],
+    "severity": "high",
+    "applicableTo": ["all", "saas", "ecommerce", "fintech"]
+  },
+  {
+    "id": "gdpr-art-12-22",
+    "framework": "GDPR",
+    "article": "Articles 12-22",
+    "title": "Data Subject Rights",
+    "summary": "Individuals have rights regarding their data: information, access, rectification, erasure, restriction, portability, objection, and automated decision-making.",
+    "requirements": [
+      "Provide a clear Privacy Notice.",
+      "Establish processes to handle Subject Access Requests (SARs) within one month.",
+      "Implement technical mechanisms to delete or export user data upon request."
+    ],
+    "commonGaps": [
+      "No process to handle account deletion requests.",
+      "Failing to respond to data requests within 30 days.",
+      "Incomplete privacy policies."
+    ],
+    "severity": "high",
+    "applicableTo": ["all", "saas", "ecommerce", "healthcare", "fintech"]
+  },
+  {
+    "id": "gdpr-art-25",
+    "framework": "GDPR",
+    "article": "Article 25",
+    "title": "Data protection by design and by default",
+    "summary": "Data protection must be integrated into technology and processes from the design stage. Default settings should only collect necessary data.",
+    "requirements": [
+      "Implement data minimization (only collect what's needed).",
+      "Apply pseudonymization or encryption where possible.",
+      "Ensure privacy settings are set to high by default."
+    ],
+    "commonGaps": [
+      "Collecting data 'just in case' it's needed later.",
+      "Defaulting user profiles to public.",
+      "Storing passwords in plain text."
+    ],
+    "severity": "high",
+    "applicableTo": ["saas", "ecommerce", "healthcare", "fintech"]
+  },
+  {
+    "id": "gdpr-art-30",
+    "framework": "GDPR",
+    "article": "Article 30",
+    "title": "Records of processing activities",
+    "summary": "Organizations must maintain a record of processing activities (RoPA) containing details of processing purposes, data categories, recipients, and transfers.",
+    "requirements": [
+      "Document all data mapping and flows.",
+      "Maintain a comprehensive RoPA document.",
+      "Include details on data retention periods and security measures."
+    ],
+    "commonGaps": [
+      "No data mapping performed.",
+      "Outdated RoPA.",
+      "Failure to include third-party processors in the records."
+    ],
+    "severity": "medium",
+    "applicableTo": ["all", "saas", "ecommerce", "healthcare", "fintech"]
+  },
+  {
+    "id": "gdpr-art-32",
+    "framework": "GDPR",
+    "article": "Article 32",
+    "title": "Security of processing",
+    "summary": "Controllers and processors must implement appropriate technical and organizational measures to ensure a level of security appropriate to the risk.",
+    "requirements": [
+      "Encrypt personal data in transit and at rest.",
+      "Ensure ongoing confidentiality, integrity, availability, and resilience of systems.",
+      "Regularly test and evaluate security measures."
+    ],
+    "commonGaps": [
+      "Lack of encryption at rest for database backups.",
+      "No regular security testing or vulnerability scanning.",
+      "Missing access controls and least privilege implementation."
+    ],
+    "severity": "critical",
+    "applicableTo": ["all", "saas", "ecommerce", "healthcare", "fintech"]
+  },
+  {
+    "id": "gdpr-art-33-34",
+    "framework": "GDPR",
+    "article": "Articles 33-34",
+    "title": "Personal data breaches",
+    "summary": "Breaches must be reported to the supervisory authority within 72 hours. High-risk breaches must be communicated to the affected individuals without undue delay.",
+    "requirements": [
+      "Establish an incident response plan.",
+      "Maintain a breach register.",
+      "Implement monitoring to detect breaches promptly."
+    ],
+    "commonGaps": [
+      "No formal incident response process.",
+      "Failure to test breach response timelines.",
+      "Staff unaware of how to report a potential incident."
+    ],
+    "severity": "critical",
+    "applicableTo": ["all", "saas", "ecommerce", "healthcare", "fintech"]
+  },
+  {
+    "id": "gdpr-art-35",
+    "framework": "GDPR",
+    "article": "Article 35",
+    "title": "Data protection impact assessment",
+    "summary": "A DPIA is required when processing is likely to result in a high risk to the rights and freedoms of natural persons.",
+    "requirements": [
+      "Conduct a DPIA for systematic evaluation, large-scale processing of special categories, or systematic monitoring.",
+      "Document risks and mitigation measures."
+    ],
+    "commonGaps": [
+      "Deploying new high-risk technologies without a DPIA.",
+      "Using AI for profiling without impact assessment."
+    ],
+    "severity": "high",
+    "applicableTo": ["saas", "healthcare", "fintech"]
+  },
+  {
+    "id": "gdpr-art-37",
+    "framework": "GDPR",
+    "article": "Articles 37-39",
+    "title": "Data Protection Officer",
+    "summary": "A DPO must be appointed if the core activities involve regular and systematic monitoring on a large scale, or large-scale processing of special categories.",
+    "requirements": [
+      "Appoint a DPO if criteria are met.",
+      "Ensure the DPO has sufficient resources and independence.",
+      "Publish DPO contact details."
+    ],
+    "commonGaps": [
+      "Failure to appoint a DPO when required.",
+      "Appointing a DPO with a conflict of interest (e.g., Head of Marketing)."
+    ],
+    "severity": "medium",
+    "applicableTo": ["saas", "healthcare", "fintech"]
+  },
+  {
+    "id": "gdpr-art-44-49",
+    "framework": "GDPR",
+    "article": "Articles 44-49",
+    "title": "Transfers to third countries",
+    "summary": "Personal data transferred outside the EU/EEA must have an adequate level of protection (e.g., adequacy decision, Standard Contractual Clauses, Binding Corporate Rules).",
+    "requirements": [
+      "Identify all cross-border data transfers.",
+      "Implement Standard Contractual Clauses (SCCs) if transferring to a non-adequate country.",
+      "Conduct Transfer Impact Assessments (TIAs)."
+    ],
+    "commonGaps": [
+      "Using US-based cloud providers without proper SCCs.",
+      "No mapping of data locations and sub-processors."
+    ],
+    "severity": "high",
+    "applicableTo": ["saas", "ecommerce", "fintech"]
+  }
+]

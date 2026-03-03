@@ -1,0 +1,108 @@
+[
+    {
+        "id": "ccpa-1798.100",
+        "framework": "CCPA",
+        "article": "Section 1798.100",
+        "title": "Notice at Collection",
+        "summary": "Businesses must inform consumers at or before the point of collection as to the categories of personal information to be collected and the purposes for which it will be used.",
+        "requirements": [
+            "Provide a clear, accessible privacy notice.",
+            "List the categories of personal information collected.",
+            "Do not collect additional categories without providing notice."
+        ],
+        "commonGaps": [
+            "Collecting data types not listed in the privacy policy.",
+            "Missing 'Notice at Collection' link on data entry forms."
+        ],
+        "severity": "high",
+        "applicableTo": [
+            "ecommerce",
+            "saas",
+            "all"
+        ]
+    },
+    {
+        "id": "ccpa-1798.120",
+        "framework": "CCPA",
+        "article": "Section 1798.120",
+        "title": "Right to Opt-Out of Sale or Sharing",
+        "summary": "Consumers have the right to direct a business that sells or shares their personal information to third parties not to sell or share that information.",
+        "requirements": [
+            "Provide a clear 'Do Not Sell or Share My Personal Information' link on the homepage.",
+            "Honor opt-out requests within 15 days.",
+            "Recognize Global Privacy Control (GPC) signals."
+        ],
+        "commonGaps": [
+            "Missing the required opt-out link.",
+            "Not accounting for data sharing with advertising networks (e.g., Meta Pixel) as a 'sale' or 'share'.",
+            "Ignoring GPC HTTP headers."
+        ],
+        "severity": "critical",
+        "applicableTo": [
+            "ecommerce",
+            "saas",
+            "fintech"
+        ]
+    },
+    {
+        "id": "ccpa-1798.130",
+        "framework": "CCPA",
+        "article": "Section 1798.130",
+        "title": "Response to Requests",
+        "summary": "Businesses must respond to verifiable consumer requests to know, delete, or correct within 45 days.",
+        "requirements": [
+            "Establish a process to receive and verify consumer requests (e.g., webform, toll-free number).",
+            "Provide information requested free of charge.",
+            "Delete personal information from records and direct service providers to do the same."
+        ],
+        "commonGaps": [
+            "Lacking a designated method for submitting requests.",
+            "Failing to pass delete requests downstream to third-party vendors."
+        ],
+        "severity": "high",
+        "applicableTo": [
+            "all"
+        ]
+    },
+    {
+        "id": "ccpa-1798.135",
+        "framework": "CCPA",
+        "article": "Section 1798.135",
+        "title": "Limit the Use of Sensitive Personal Information",
+        "summary": "Consumers can direct a business to limit its use of sensitive personal information to that which is necessary to perform the services.",
+        "requirements": [
+            "Provide a 'Limit the Use of My Sensitive Personal Information' link.",
+            "Restrict processing of SSNs, geolocation, race, religion, etc., when requested."
+        ],
+        "commonGaps": [
+            "Treating precise geolocation data normally, without offering limitation controls.",
+            "Lack of categorization for sensitive vs. standard personal information."
+        ],
+        "severity": "high",
+        "applicableTo": [
+            "saas",
+            "healthcare",
+            "fintech",
+            "ecommerce"
+        ]
+    },
+    {
+        "id": "ccpa-1798.150",
+        "framework": "CCPA",
+        "article": "Section 1798.150",
+        "title": "Data Security and Private Right of Action",
+        "summary": "Businesses must implement reasonable security procedures. Consumers can sue if nonencrypted and nonredacted personal information is subject to unauthorized access due to the business's failure to implement reasonable security.",
+        "requirements": [
+            "Implement and maintain reasonable security procedures and practices.",
+            "Encrypt personal data at rest and in transit."
+        ],
+        "commonGaps": [
+            "Storing unstructured sensitive data in unencrypted S3 buckets.",
+            "Lack of access controls leading to data exposure."
+        ],
+        "severity": "critical",
+        "applicableTo": [
+            "all"
+        ]
+    }
+]
