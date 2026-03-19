@@ -134,6 +134,13 @@ STRIPE_WEBHOOK_SECRET=
 NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=
 ```
 
+## Plan: Phase 1 – Polymarket MVP Data Ingestion (Zero-Cost)
+- Create a new feature branch (feat/polymarket-mvp-phase1) with Phase 1 data ingestion scaffold
+- Ingest mock Polymarket markets and daily prices into Supabase, using a lightweight Node.js app (polymarket-mvp-phase1)
+- Add a minimal GitHub Actions workflow (workflows/polymarket-mvp-phase1.yaml) to schedule ingestion on CI using free tier
+- Wire a basic data adapter (polymarket-mvp-phase1/feed.js) to generate sample market data for MVP
+- Ensure env vars for Supabase and any mock Polymarket feed are documented in .env.local.example
+
 ## When Building Features
 1. Always start with the TypeScript types/interfaces
 2. Build the agent tool first, then the agent, then the API route, then the UI
