@@ -1,7 +1,7 @@
 require('dotenv').config()
 
 const { createClient } = require('@supabase/supabase-js')
-const ingestLive = require('./ingest-live')
+// ingestLive is no longer required at runtime in Phase 2 live path; ingestion is driven by data-live-feed and CI
 const liveFeed = require('./data-live-feed')
 const llmLive = require('./llm-live')
 const promptModule = require('./prompt-live')
