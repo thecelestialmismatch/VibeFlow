@@ -3,160 +3,218 @@
 import { motion } from 'framer-motion';
 import { Sidebar } from '@/components/dashboard/Sidebar';
 import { TopNav } from '@/components/dashboard/TopNav';
-import { CircularProgressbar } from 'react-circular-progressbar';
-import { Activity, AlertTriangle, ShieldCheck, FileText, ArrowRight } from 'lucide-react';
+import {
+  ShieldCheck, AlertTriangle, KeyRound, Code2,
+  CreditCard, Lock, Users, Eye, Activity, ArrowRight, Chrome
+} from 'lucide-react';
 import Link from 'next/link';
 
-// Mock Data for MVP visualization
-const MOCK_DATA = {
-    overallScore: 68,
-    frameworkScores: [
-        { name: 'GDPR', score: 78, bg: 'bg-emerald-500' },
-        { name: 'CCPA', score: 65, bg: 'bg-amber-500' },
-        { name: 'SOC 2', score: 45, bg: 'bg-red-500' },
-    ],
-    gaps: [
-        { id: 1, title: 'Missing Data Processing Agreement', framework: 'GDPR', severity: 'critical' },
-        { id: 2, title: 'No "Do Not Sell" link on homepage', framework: 'CCPA', severity: 'high' },
-        { id: 3, title: 'MFA not enforced for admins', framework: 'SOC 2', severity: 'critical' },
-        { id: 4, title: 'Outdated Cookie Policy', framework: 'GDPR', severity: 'medium' },
-    ]
-};
+const MOCK_STATS = [
+  { label: 'Leaks Blocked Today', value: '14', delta: '+3 vs yesterday', icon: ShieldCheck, color: 'text-emerald-400', bg: 'bg-emerald-500/10 border-emerald-500/20' },
+  { label: 'High Severity', value: '3', delta: 'Needs review', icon: AlertTriangle, color: 'text-red-400', bg: 'bg-red-500/10 border-red-500/20' },
+  { label: 'AI Tools Monitored', value: '10', delta: 'All active', icon: Activity, color: 'text-blue-400', bg: 'bg-blue-500/10 border-blue-500/20' },
+  { label: 'Team Members', value: '1', delta: 'Upgrade for teams', icon: Users, color: 'text-purple-400', bg: 'bg-purple-500/10 border-purple-500/20' },
+];
+
+const MOCK_EVENTS = [
+  {
+    id: 1,
+    type: 'API Key',
+    icon: KeyRound,
+    detail: 'AWS access key pattern detected',
+    tool: 'ChatGPT',
+    severity: 'critical',
+    time: '2 min ago',
+    blocked: true,
+  },
+  {
+    id: 2,
+    type: 'Source Code',
+    icon: Code2,
+    detail: 'Function definitions + import statements',
+    tool: 'Claude',
+    severity: 'high',
+    time: '18 min ago',
+    blocked: true,
+  },
+  {
+    id: 3,
+    type: 'Credit Card',
+    icon: CreditCard,
+    detail: '16-digit pattern matching Luhn algorithm',
+    tool: 'Gemini',
+    severity: 'critical',
+    time: '1 hr ago',
+    blocked: true,
+  },
+  {
+    id: 4,
+    type: 'Password',
+    icon: Lock,
+    detail: 'Password field content pasted',
+    tool: 'DeepSeek',
+    severity: 'high',
+    time: '3 hr ago',
+    blocked: false,
+  },
+  {
+    id: 5,
+    type: 'PII / SSN',
+    icon: Eye,
+    detail: 'Social Security Number format detected',
+    tool: 'Copilot',
+    severity: 'critical',
+    time: '5 hr ago',
+    blocked: true,
+  },
+];
+
+const TOP_LEAK_TYPES = [
+  { label: 'API Keys & Tokens', count: 28, color: 'bg-red-500' },
+  { label: 'Source Code', count: 22, color: 'bg-orange-500' },
+  { label: 'Passwords', count: 15, color: 'bg-amber-500' },
+  { label: 'PII / SSNs', count: 9, color: 'bg-purple-500' },
+  { label: 'Credit Cards', count: 6, color: 'bg-blue-500' },
+];
+
+const maxCount = Math.max(...TOP_LEAK_TYPES.map((t) => t.count));
 
 export default function DashboardPage() {
-    const getSeverityColor = (sev: string) => {
-        switch (sev) {
-            case 'critical': return 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400 border-red-200';
-            case 'high': return 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400 border-orange-200';
-            case 'medium': return 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400 border-amber-200';
-            default: return 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400 border-blue-200';
-        }
-    };
+  const getSeverityStyle = (sev: string) => {
+    switch (sev) {
+      case 'critical': return 'bg-red-500/10 text-red-400 border-red-500/30';
+      case 'high': return 'bg-orange-500/10 text-orange-400 border-orange-500/30';
+      case 'medium': return 'bg-amber-500/10 text-amber-400 border-amber-500/30';
+      default: return 'bg-slate-500/10 text-slate-400 border-slate-500/30';
+    }
+  };
 
-    return (
-        <div className="flex h-screen bg-gray-50 dark:bg-slate-900 text-gray-900 dark:text-gray-100 font-sans">
-            <Sidebar />
-            <div className="flex-1 flex flex-col overflow-hidden">
-                <TopNav title="Dashboard" />
+  return (
+    <div className="flex h-screen bg-slate-950 text-gray-100 font-sans">
+      <Sidebar />
+      <div className="flex-1 flex flex-col overflow-hidden">
+        <TopNav title="Overview" />
 
-                <main className="flex-1 overflow-y-auto p-6">
-                    <div className="max-w-6xl mx-auto space-y-6">
+        <main className="flex-1 overflow-y-auto p-6">
+          <div className="max-w-6xl mx-auto space-y-6">
 
-                        {/* Top Row: Score & Quick Actions */}
-                        <div className="grid lg:grid-cols-3 gap-6">
-
-                            {/* Overall Score */}
-                            <motion.div
-                                initial={{ opacity: 0, scale: 0.95 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                className="col-span-1 bg-white dark:bg-slate-950 p-6 rounded-2xl border border-gray-200 dark:border-slate-800 shadow-sm flex flex-col items-center justify-center"
-                            >
-                                <h3 className="text-lg font-medium mb-6 w-full text-left">Overall Compliance Score</h3>
-                                <div className="relative w-48 h-48 flex items-center justify-center mb-4">
-                                    <svg viewBox="0 0 36 36" className="w-full h-full text-indigo-500">
-                                        <path
-                                            className="text-gray-100 dark:text-slate-800"
-                                            d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                                            fill="none" stroke="currentColor" strokeWidth="3"
-                                        />
-                                        <path
-                                            className="stroke-current"
-                                            strokeDasharray={`${MOCK_DATA.overallScore}, 100`}
-                                            d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                                            fill="none" strokeWidth="3" strokeLinecap="round"
-                                        />
-                                    </svg>
-                                    <div className="absolute inset-0 flex flex-col justify-center items-center">
-                                        <span className="text-5xl font-bold">{MOCK_DATA.overallScore}</span>
-                                        <span className="text-xs text-gray-500">out of 100</span>
-                                    </div>
-                                </div>
-                                <div className="text-sm font-medium text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/20 px-3 py-1 rounded-full">
-                                    Action Required
-                                </div>
-                            </motion.div>
-
-                            {/* Framework Breakdown & Actions */}
-                            <motion.div
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: 0.1 }}
-                                className="col-span-2 flex flex-col gap-6"
-                            >
-                                {/* Frameworks */}
-                                <div className="bg-white dark:bg-slate-950 p-6 rounded-2xl border border-gray-200 dark:border-slate-800 shadow-sm flex-1">
-                                    <h3 className="text-lg font-medium mb-4">Score Breakdown</h3>
-                                    <div className="space-y-4">
-                                        {MOCK_DATA.frameworkScores.map((f, i) => (
-                                            <div key={i}>
-                                                <div className="flex justify-between text-sm mb-1">
-                                                    <span className="font-medium">{f.name}</span>
-                                                    <span>{f.score}/100</span>
-                                                </div>
-                                                <div className="w-full bg-gray-200 dark:bg-slate-800 rounded-full h-2">
-                                                    <div className={`h-2 rounded-full ${f.bg}`} style={{ width: `${f.score}%` }}></div>
-                                                </div>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
-
-                                {/* Quick Actions */}
-                                <div className="grid grid-cols-3 gap-4">
-                                    <Link href="/scan" className="flex flex-col items-center justify-center p-4 bg-indigo-50 dark:bg-indigo-900/20 hover:bg-indigo-100 transition-colors rounded-xl border border-indigo-100 dark:border-indigo-800/50 text-indigo-700 dark:text-indigo-300">
-                                        <Activity className="h-6 w-6 mb-2" />
-                                        <span className="text-sm font-medium">New Scan</span>
-                                    </Link>
-                                    <Link href="/policies" className="flex flex-col items-center justify-center p-4 bg-white dark:bg-slate-950 hover:bg-gray-50 transition-colors rounded-xl border border-gray-200 dark:border-slate-800">
-                                        <FileText className="h-6 w-6 mb-2 text-gray-500" />
-                                        <span className="text-sm font-medium">Auto Policy</span>
-                                    </Link>
-                                    <Link href="/reports" className="flex flex-col items-center justify-center p-4 bg-white dark:bg-slate-950 hover:bg-gray-50 transition-colors rounded-xl border border-gray-200 dark:border-slate-800">
-                                        <ShieldCheck className="h-6 w-6 mb-2 text-gray-500" />
-                                        <span className="text-sm font-medium">View Report</span>
-                                    </Link>
-                                </div>
-                            </motion.div>
-                        </div>
-
-                        {/* Bottom Row: Recent Gaps */}
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.2 }}
-                            className="bg-white dark:bg-slate-950 rounded-2xl border border-gray-200 dark:border-slate-800 shadow-sm"
-                        >
-                            <div className="p-6 border-b border-gray-200 dark:border-slate-800 flex justify-between items-center">
-                                <h3 className="text-lg font-medium flex items-center gap-2">
-                                    <AlertTriangle className="h-5 w-5 text-gray-500" /> Critical & High Gaps
-                                </h3>
-                                <Link href="/reports" className="text-sm text-indigo-600 hover:text-indigo-700 font-medium flex items-center gap-1">
-                                    View all <ArrowRight className="h-4 w-4" />
-                                </Link>
-                            </div>
-                            <div className="divide-y divide-gray-100 dark:divide-slate-800/50">
-                                {MOCK_DATA.gaps.map((gap) => (
-                                    <div key={gap.id} className="p-4 sm:p-6 flex items-center justify-between hover:bg-gray-50 dark:hover:bg-slate-900/50 transition-colors">
-                                        <div>
-                                            <h4 className="font-medium text-gray-900 dark:text-gray-100">{gap.title}</h4>
-                                            <p className="text-sm text-gray-500 mt-1">Impacts {gap.framework} compliance</p>
-                                        </div>
-                                        <div className="flex gap-3 items-center">
-                                            <span className={`px-2.5 py-0.5 rounded-full text-xs font-semibold uppercase tracking-wider border ${getSeverityColor(gap.severity)}`}>
-                                                {gap.severity}
-                                            </span>
-                                            <button className="text-sm border border-gray-200 dark:border-slate-700 rounded-lg px-3 py-1.5 hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors">
-                                                Fix
-                                            </button>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                        </motion.div>
-
-                    </div>
-                </main>
+            {/* Stats Row */}
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+              {MOCK_STATS.map(({ label, value, delta, icon: Icon, color, bg }, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.05 * i }}
+                  className={`p-5 rounded-xl border ${bg} flex flex-col gap-3`}
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-medium text-slate-500 uppercase tracking-wider">{label}</span>
+                    <Icon className={`h-4 w-4 ${color}`} />
+                  </div>
+                  <div className="text-3xl font-extrabold text-white">{value}</div>
+                  <div className="text-xs text-slate-500">{delta}</div>
+                </motion.div>
+              ))}
             </div>
-        </div>
-    );
+
+            {/* Middle Row: Recent Events + Leak Breakdown */}
+            <div className="grid lg:grid-cols-3 gap-6">
+
+              {/* Recent Leak Events */}
+              <motion.div
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1 }}
+                className="col-span-2 bg-slate-900 rounded-xl border border-slate-800"
+              >
+                <div className="p-5 border-b border-slate-800 flex items-center justify-between">
+                  <h3 className="text-sm font-semibold text-white flex items-center gap-2">
+                    <AlertTriangle className="h-4 w-4 text-red-400" />
+                    Recent Leak Events
+                  </h3>
+                  <Link href="/dashboard/events" className="text-xs text-red-400 hover:text-red-300 flex items-center gap-1 transition-colors">
+                    View all <ArrowRight className="h-3 w-3" />
+                  </Link>
+                </div>
+                <div className="divide-y divide-slate-800/60">
+                  {MOCK_EVENTS.map((event) => (
+                    <div key={event.id} className="p-4 flex items-center gap-4 hover:bg-slate-800/30 transition-colors">
+                      <div className="w-9 h-9 rounded-lg bg-slate-800 flex items-center justify-center shrink-0">
+                        <event.icon className="h-4 w-4 text-slate-400" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 mb-0.5">
+                          <span className="text-sm font-semibold text-white">{event.type}</span>
+                          <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase border ${getSeverityStyle(event.severity)}`}>
+                            {event.severity}
+                          </span>
+                        </div>
+                        <p className="text-xs text-slate-500 truncate">{event.detail}</p>
+                      </div>
+                      <div className="text-right shrink-0">
+                        <div className="text-xs font-medium text-slate-400 mb-1">{event.tool}</div>
+                        <div className={`text-[10px] font-semibold ${event.blocked ? 'text-emerald-400' : 'text-red-400'}`}>
+                          {event.blocked ? 'Blocked' : 'Warned'}
+                        </div>
+                      </div>
+                      <div className="text-xs text-slate-600 shrink-0 hidden sm:block">{event.time}</div>
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+
+              {/* Leak Type Breakdown */}
+              <motion.div
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.15 }}
+                className="bg-slate-900 rounded-xl border border-slate-800 p-5"
+              >
+                <h3 className="text-sm font-semibold text-white mb-6 flex items-center gap-2">
+                  <Activity className="h-4 w-4 text-slate-400" />
+                  Top Leak Categories
+                  <span className="text-xs text-slate-600 font-normal ml-auto">Last 30 days</span>
+                </h3>
+                <div className="space-y-4">
+                  {TOP_LEAK_TYPES.map(({ label, count, color }, i) => (
+                    <div key={i}>
+                      <div className="flex justify-between text-xs mb-1.5">
+                        <span className="text-slate-300 font-medium">{label}</span>
+                        <span className="text-slate-500">{count}</span>
+                      </div>
+                      <div className="w-full bg-slate-800 rounded-full h-1.5">
+                        <div
+                          className={`h-1.5 rounded-full ${color}`}
+                          style={{ width: `${(count / maxCount) * 100}%` }}
+                        ></div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Upgrade nudge */}
+                <div className="mt-8 p-4 rounded-xl bg-red-600/5 border border-red-600/15">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Chrome className="h-4 w-4 text-red-400" />
+                    <span className="text-sm font-semibold text-white">Free Plan</span>
+                  </div>
+                  <p className="text-xs text-slate-500 mb-3">
+                    Upgrade to Team to see analytics across your whole organization.
+                  </p>
+                  <Link
+                    href="/login"
+                    className="block text-center py-2 rounded-lg bg-red-600 hover:bg-red-500 text-white text-xs font-semibold transition-colors"
+                  >
+                    Upgrade to Team →
+                  </Link>
+                </div>
+              </motion.div>
+            </div>
+
+          </div>
+        </main>
+      </div>
+    </div>
+  );
 }
