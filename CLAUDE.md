@@ -1,149 +1,42 @@
-# CLAUDE.md — VibeFlow AI Compliance Platform
+# CLAUDE.md — VibeFlow Polymarket Bot (Phase 2+)
 
-## Project Overview
-VibeFlow is an AI-powered compliance officer SaaS for small businesses. 
-It uses multi-agent AI to scan businesses, identify applicable regulations 
-(GDPR, CCPA, HIPAA, SOC 2, EU AI Act), generate compliant policies, 
-perform gap analysis, and provide remediation steps — all at $49/month 
-instead of the $15,000+/year that competitors charge.
+Overview
+- This document describes the Phase 2+ architecture for a zero-cost Polymarket MVP that ingests live data, generates signals, and simulates trades in a sandboxed environment prior to any live money.
+- All data and bets are sandboxed; live money path requires explicit compliance gating.
 
-## Tech Stack
-- **IDE**: Claude Code + Antigravity Skills
-- **Framework**: Next.js 14+ (App Router)
-- **Database**: Supabase (PostgreSQL + pgvector for AI)
-- **Auth**: Supabase Auth (Email/Password + Google Social)
-- **Payments**: Stripe Checkout
-- **Hosting**: Vercel
-- **UI/Styling**: Tailwind CSS + Shadcn UI
-- **Animations**: Framer Motion (Clean, professional transitions)
-- **AI Engine**: VoltAgent Framework + Groq (Llama 3) + Gemini Proase (PostgreSQL + Auth + Realtime)
-- **Vector DB**: Qdrant Cloud (free tier) for regulation embeddings
-- **Hosting**: Vercel (free tier)
-- **Payments**: Stripe (free to setup, pay-per-transaction)
+Project Scope and Roadmap (concise)
+- Phase 0/Phase 1: Foundation and data ingestion scaffolding (Phase 1 patch already in repo)
+- Phase 2: Live data path + sandboxed trading loop; edge-based bet sizing; gated live wallet integration scaffolds; CI workflows
+- Phase 3: Fully gated live pilot with formal compliance review and wallet onboarding; phased rollout toward live trading with risk controls
 
-## Project Structure
-```
-vibeflow/
-├── src/
-│   ├── app/                    # Next.js App Router pages
-│   │   ├── page.tsx            # Landing page
-│   │   ├── dashboard/          # User dashboard
-│   │   ├── scan/               # Compliance scan interface
-│   │   ├── policies/           # Generated policies
-│   │   ├── reports/            # Gap analysis reports
-│   │   └── api/                # API routes
-│   │       ├── agents/         # VoltAgent endpoints
-│   │       ├── scan/           # Scan API
-│   │       ├── policies/       # Policy generation API
-│   │       └── webhooks/       # Stripe webhooks
-│   ├── agents/                 # VoltAgent agent definitions
-│   │   ├── supervisor.ts       # Supervisor agent (orchestrator)
-│   │   ├── scanner.ts          # Regulation Scanner agent
-│   │   ├── policy-generator.ts # Policy Generator agent
-│   │   ├── gap-analyzer.ts     # Gap Analysis agent
-│   │   ├── remediation.ts      # Remediation agent
-│   │   └── monitor.ts          # Regulatory Monitor agent
-│   ├── tools/                  # VoltAgent tools
-│   │   ├── web-scraper.ts      # Website analysis tool
-│   │   ├── regulation-rag.ts   # RAG retrieval tool
-│   │   ├── policy-template.ts  # Policy template tool
-│   │   └── scoring.ts          # Compliance scoring tool
-│   ├── lib/                    # Shared utilities
-│   │   ├── supabase.ts         # Supabase client
-│   │   ├── qdrant.ts           # Qdrant vector client
-│   │   ├── embeddings.ts       # Embedding generation
-│   │   └── regulations/        # Regulation data (JSON)
-│   │       ├── gdpr.json
-│   │       ├── ccpa.json
-│   │       ├── hipaa.json
-│   │       ├── soc2.json
-│   │       └── eu-ai-act.json
-│   ├── components/             # React components
-│   │   ├── ui/                 # shadcn/ui base components
-│   │   ├── dashboard/          # Dashboard components
-│   │   ├── scan/               # Scan UI components
-│   │   └── landing/            # Landing page components
-│   └── types/                  # TypeScript types
-│       ├── regulations.ts
-│       ├── scan-results.ts
-│       └── policies.ts
-├── .env.local                  # Environment variables (NEVER COMMIT)
-├── CLAUDE.md                   # This file
-└── package.json
-```
+Key Tech Stack (2026):
+- Hosting: Free tiers (Replit/Render/Railway) for cloud deployments
+- Backend: Supabase (PostgreSQL + Auth + RLS) – FREE tier
+- Data: Live Polymarket data adapter (Phase 2) with Phase 1 as fallback mock data
+- Orchestration: Inngest (free tier) for background jobs (Phase 3 gating when enabling live path)
+- ML/LLM: Free-tier LLM (OpenRouter or equivalent) in sandbox; deterministic prompts for Phase 2+ until real API is wired
+- Wallet: Wallet signer scaffolds with gated live integration; no private keys committed
 
-## Code Style
-- TypeScript strict mode, no `any` types ever
-- Use named exports, not default exports
-- Tailwind utility classes only, no custom CSS files
-- Functional components with hooks only
-- 2-space indentation
-- camelCase for variables/functions, PascalCase for components/types
-- Every component must have proper TypeScript interfaces
+Architecture Overview (high-level analogy)
+- Data Ingest: Like a rain gauge—collects market data regularly and stores it.
+- Signal Engine: The weather predictor—uses a small model to decide BUY/SELL/HOLD with a confidence score.
+- Ledger: Paper wallet—simulates balances and PnL.
+- Executor: Sandbox trading engine—executes simulated bets, logs results, and tracks risk.
+- Orchestrator: A scheduler (Inngest later) that stitches data, signals, and ledger updates together.
+- LLM: The market whisperer—returns structured signals that the engine validates before applying them.
+- Secrets: All keys live in environment variables; never exposed in the browser or repo.
 
-## Commands
-- `npm run dev` — Start development server (port 3000)
-- `npm run build` — Production build
-- `npm run lint` — ESLint check
-- `npx supabase start` — Start local Supabase
+Security & Compliance Guardrails
+- Phase 2 live path is opt-in; a kill switch (PHASE2_KILL_SWITCH) gates any live bets.
+- Wallet onboarding must be explicit, with keys stored in a secrets manager or env vars; never in code.
+- All data is sandboxed; avoid any PII in prompts/logs; record only audit logs and non-sensitive metrics.
 
-## Critical Rules
-- NEVER commit .env or .env.local files
-- NEVER store API keys in code — always use environment variables
-- NEVER use `any` type — always define proper interfaces
-- ALL user data must go through Supabase Row Level Security (RLS)
-- ALL API routes must validate authentication before processing
-- ALL AI-generated policy text must include disclaimer: "This is not legal advice"
-- Regulation data in /lib/regulations/ must cite specific articles/sections
-- Every compliance score must show calculation methodology
+How to Read this Document
+- Start with Phase 2: Live Data & Sandbox Path; Phase 3 adds live pilots and governance.
+- Section references link to actual code changes in the repo.
 
-## Agent Architecture (VoltAgent)
-The system uses a Supervisor pattern:
-1. **SupervisorAgent** — Routes user requests to specialized agents
-2. **ScannerAgent** — Analyzes business type and identifies applicable regulations
-3. **PolicyGeneratorAgent** — Creates compliant policy documents using RAG
-4. **GapAnalyzerAgent** — Compares current state vs requirements, produces scored report
-5. **RemediationAgent** — Generates step-by-step fixes with code snippets
-6. **MonitorAgent** — Tracks regulatory changes and sends alerts
+Environment and Secrets
+- Keys live in environment variables (SUPABASE_URL, SUPABASE_ANON_KEY, PHASE2_LIVE_MODE, PHASE2_LIVE_WALLET_CONFIGURED, PHASE2_KILL_SWITCH, etc).
+- No keys should be committed to Git or exposed in UI logs.
 
-Each agent has:
-- Specific system prompt defining its role
-- Access to relevant tools only (principle of least privilege)
-- RAG access to regulation embeddings in Qdrant
-
-## Database Schema (Supabase)
-- `users` — Auth users (managed by Supabase Auth)
-- `organizations` — Business profiles
-- `scans` — Scan results with compliance scores
-- `policies` — Generated policy documents
-- `gaps` — Identified compliance gaps
-- `remediations` — Remediation steps and status
-- `alerts` — Regulatory change alerts
-
-## Environment Variables Required
-```
-NEXT_PUBLIC_SUPABASE_URL=
-NEXT_PUBLIC_SUPABASE_ANON_KEY=
-SUPABASE_SERVICE_ROLE_KEY=
-GOOGLE_GENERATIVE_AI_API_KEY=
-GROQ_API_KEY=
-QDRANT_URL=
-QDRANT_API_KEY=
-STRIPE_SECRET_KEY=
-STRIPE_WEBHOOK_SECRET=
-NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=
-```
-
-## Plan: Phase 1 – Polymarket MVP Data Ingestion (Zero-Cost)
-- Create a new feature branch (feat/polymarket-mvp-phase1) with Phase 1 data ingestion scaffold
-- Ingest mock Polymarket markets and daily prices into Supabase, using a lightweight Node.js app (polymarket-mvp-phase1)
-- Add a minimal GitHub Actions workflow (workflows/polymarket-mvp-phase1.yaml) to schedule ingestion on CI using free tier
-- Wire a basic data adapter (polymarket-mvp-phase1/feed.js) to generate sample market data for MVP
-- Ensure env vars for Supabase and any mock Polymarket feed are documented in .env.local.example
-
-## When Building Features
-1. Always start with the TypeScript types/interfaces
-2. Build the agent tool first, then the agent, then the API route, then the UI
-3. Use VoltAgent's Supervisor pattern for all multi-agent orchestration
-4. Test each agent individually before connecting to supervisor
-5. All regulation references must include article numbers and direct quotes
+This doc is the single source of truth for governance about the Phase 2+ rollout. It will be updated as we implement changes and reach new stages.

@@ -1,0 +1,68 @@
+{
+  "manifest_version": 3,
+  "name": "LeakWall — Stop AI Data Leaks",
+  "version": "0.1.0",
+  "description": "Prevents accidental leaking of passwords, API keys, source code, SSNs, and credit cards into ChatGPT, Claude, Gemini, Copilot, DeepSeek, and 600+ other AI tools.",
+
+  "permissions": [
+    "storage",
+    "notifications"
+  ],
+
+  "host_permissions": [
+    "https://chat.openai.com/*",
+    "https://chatgpt.com/*",
+    "https://claude.ai/*",
+    "https://gemini.google.com/*",
+    "https://copilot.microsoft.com/*",
+    "https://chat.deepseek.com/*",
+    "https://www.perplexity.ai/*",
+    "https://poe.com/*",
+    "https://www.jasper.ai/*",
+    "https://app.copy.ai/*",
+    "https://chat.mistral.ai/*"
+  ],
+
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+
+  "content_scripts": [
+    {
+      "matches": [
+        "https://chat.openai.com/*",
+        "https://chatgpt.com/*",
+        "https://claude.ai/*",
+        "https://gemini.google.com/*",
+        "https://copilot.microsoft.com/*",
+        "https://chat.deepseek.com/*",
+        "https://www.perplexity.ai/*",
+        "https://poe.com/*",
+        "https://www.jasper.ai/*",
+        "https://app.copy.ai/*",
+        "https://chat.mistral.ai/*"
+      ],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "LeakWall",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}
