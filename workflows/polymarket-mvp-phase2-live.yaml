@@ -1,0 +1,22 @@
+name: polymarket-mvp-phase2-live
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '*/15 * * * *'
+jobs:
+  phase2-live:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      - name: Install
+        run: npm ci --workspaces=false || npm install --workspaces=false
+      - name: Run Phase2 Live Ingestion
+        run: node polymarket-mvp-phase2-live/index.js
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+          PHASE2_LIVE_MODE: true

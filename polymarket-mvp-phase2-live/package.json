@@ -1,0 +1,17 @@
+{
+  "name": "polymarket-mvp-phase2-live",
+  "version": "0.1.0",
+  "private": true,
+  "type": "commonjs",
+  "scripts": {
+    "start": "node index.js",
+    "ingest-live": "node ingest-live.js",
+    "test": "node tests/run_tests.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "axios": "^1.5.0",
+    "@supabase/supabase-js": "^1.35.0",
+    "ethers": "^5.7.2"
+  }
+}
